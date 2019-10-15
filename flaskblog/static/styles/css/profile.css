@@ -1,0 +1,33 @@
+body{
+  margin: 0;
+}
+
+.profile{
+  padding: 20px;
+}
+
+.profile .profile-img{
+margin: 0 auto;
+}
+
+.profile-img{
+  max-width: 50%;
+  padding: 10px;
+}
+
+p, .user-data{
+   text-align: center;
+}
+
+h3{
+  background-color: gray;
+  float: left;
+}
+
+.post-form{
+  height: auto;
+}
+
+.post-container{
+  max-width: 100%;
+}

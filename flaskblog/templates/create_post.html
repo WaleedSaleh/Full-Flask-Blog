@@ -1,0 +1,35 @@
+{% extends 'layouts/layout.html' %}
+{% block main %}
+    <div class="container border col-lg-11 p-3 waleed">
+        <form method="POST" action="">
+        {{ form.hidden_tag() }}
+            <div class="form-group border-bottom-green">
+                {% if form.title.errors %}
+                {{ form.title(class='form-control is-invalid') }}
+                {% for error in form.title.errors %}
+                <div class="invalid-feedback">
+                    <span class="text-danger">{{ error }}</span><br>
+                </div>
+                {% endfor %}
+            {% else %}
+                {{ form.title(class='form-control', placeholder='Title') }}
+            {% endif %}
+            </div>
+            <div class="form-group">
+                {% if form.post_field.errors %}
+                {{ form.post_field(class='form-control is-invalid', cols= 10 , rows = 5) }}
+                {% for error in form.post_field.errors %}
+                <div class="invalid-feedback">
+                    <span class="text-danger">{{ error }}</span><br>
+                </div>
+                {% endfor %}
+            {% else %}
+                {{ form.post_field(class='form-control',rows=2, placeholder ="What's on Your Mind ?") }}
+            {% endif %}
+            </div>
+            {{ form.submit(class='btn btn-outline-info col-4') }}
+        </form>
+    </div>
+{% endblock main%}
+
+

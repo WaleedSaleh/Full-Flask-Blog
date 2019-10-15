@@ -1,0 +1,80 @@
+{% extends 'layouts/layout.html' %}
+{% block content %}
+
+    {% if posts %}
+        {% for post in posts.items %}
+            <article class="media content-section mb-4" style="border-bottom-color:green ">
+                <img class="rounded-circle article-img"
+                     src="{{ url_for('static', filename='imgs/profile_pics/' + post.author.image_file) }}"
+                     alt="User Profile Picture">
+                <div class="media-body mt-3">
+                    <div class="article-metadata mb-3 ">
+                        <a class="mr-2" href="{{ url_for('posts.user_posts',username=post.author.username) }}">{{ post.author.username }}</a>
+                        <small class="text-muted"> {{post.publish_date.strftime('%Y-%m-%d')}} </small>
+                    </div>
+                    {% if post.author == current_user %}
+                        <h2><a class="article-title"
+                               href="{{ url_for('posts.post', username = post.author.username, post_id = post.id) }}">{{ post.title }}</a>
+                        </h2>
+                    {% else %}
+                        <h2 class="article-title">{{ post.title }}</h2>
+                    {% endif %}
+                    <p class="article-content mt-3">{{ post.body }}</p>
+                    {% if post.author == current_user %}
+                        <div class="border-top">
+                            <a class="btn btn-secondary mt-2"
+                               href="{{ url_for('posts.edit_post',post_id = post.id, username = post.author.username) }}">
+                                Edit
+                            </a>
+                            <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
+                                    data-target="#deletePost">
+                                Delete
+                            </button>
+                        </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="deletePost" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleatableModal">Delete Post</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
+                                        <form method="POST"
+                                              action="{{ url_for('posts.delete_post', post_id = post.id) }}">
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+            </article>
+        {% endfor %}
+        <div class="pagination " style="margin-left: 20px;">
+            {%- for page in posts.iter_pages(left_edge=2, left_current= 1, right_edge = 2, right_current = 1) %}
+                {% if page %}
+                    {% if page != posts.page %}
+                        <a class="btn btn-outline-info m-1 "
+                           href="{{ url_for('main_page.home',username = current_user.username ,page=page) }}">{{ page }}</a>
+                    {% else %}
+                        <a class="btn btn-info"
+                           href="{{ url_for('main_page.home',username = current_user.username ,page = page) }}">{{ page }}</a>
+                    {% endif %}
+                {% else %}
+                    <span class="ellipsis">…</span>
+                {% endif %}
+            {%- endfor %}
+        </div>
+    {% else %}
+        <h1 class="toast-header text-center">{{ current_user.username }} HAS NO POSTS YET !</h1>
+    {% endif %}
+
+{% endblock %}

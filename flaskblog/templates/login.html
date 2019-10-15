@@ -1,0 +1,58 @@
+
+
+{% extends 'layouts/layout.html' %}
+
+{% block content %}
+{{ form.hidden_tag() }}
+    <div class="content-section align-content-center">
+        <form method="POST" action="">
+        {{ form.hidden_tag() }}
+         {{ form.csrf_token }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control is-invalid") }}
+                        {% for error in form.email.errors %}
+                            <div class="invalid-feedback">
+                                <span>{{ error }}</span>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.email(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control is-invalid") }}
+                        {% for error in form.password.errors %}
+                            <div class="invalid-feedback">
+                                <span>{{ error }}</span>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.password(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div>
+                    <div class="form-check d-flex">
+                        {{ form.remember_me(class="form-check-input") }}
+                        {{ form.remember_me.label(class="form-check-label") }}
+                    </div>
+                    {{ form.submit(class="btn btn-outline-info") }}
+                    <small class="text-muted ml-2 ">
+                        <a href="{{url_for('users.request_reset_password')}}" >Forgot your password?</a>
+                    </small>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="border-top">
+        <small class="text-muted ml-2">
+            Need an account? <a href="{{ url_for('users.registration') }}">Sign Up</a>
+        </small>
+    </div>
+{% endblock content %}
+

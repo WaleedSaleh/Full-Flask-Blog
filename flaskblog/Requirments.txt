@@ -1,8 +1,0 @@
-You need to install these packages
-
-flask => the micro framework
-wtforms => to make forms
-flask-wtf => For manipulating forms
-flask-sqlalchemy => ORM model for easing the database transactions
-flask_bcrypt => to encrypt passwords
-Pillow => to manipulate the images
